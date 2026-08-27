@@ -1,0 +1,27 @@
+# Dependencies and build output
+node_modules/
+.next/
+out/
+dist/
+coverage/
+
+# Environment and local state
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# Retrieved provider payloads (retain locally, never commit)
+backend/data/raw/*
+!backend/data/raw/.gitkeep
