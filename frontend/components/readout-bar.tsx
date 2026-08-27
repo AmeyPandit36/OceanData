@@ -6,29 +6,32 @@ export type ReadoutStatus = "idle" | "selecting" | "checking" | "success" | "fai
 
 interface ReadoutBarProps {
   status: ReadoutStatus;
+  provider?: string;
+  dataset?: string;
+  position?: string;
+  range?: string;
 }
 
 const statusConfig = {
   idle: { label: "IDLE", detail: "Awaiting provider", tone: "text-[var(--muted)]", Icon: Radio },
-  selecting: { label: "SELECTING", detail: "Query in progress", tone: "text-[var(--signal-amber)]", Icon: Radio },
+  selecting: { label: "SELECTING", detail: "Build the query", tone: "text-[var(--signal-amber)]", Icon: Radio },
   checking: { label: "CHECKING", detail: "Contacting source", tone: "text-[var(--signal-amber)]", Icon: LoaderCircle },
   success: { label: "AVAILABLE", detail: "Source responded", tone: "text-[var(--chart-cyan)]", Icon: CheckCircle2 },
-  failed: { label: "UNAVAILABLE", detail: "Request failed", tone: "text-[var(--coral-alert)]", Icon: AlertCircle },
+  failed: { label: "UNAVAILABLE", detail: "Review request", tone: "text-[var(--coral-alert)]", Icon: AlertCircle },
 } as const;
 
-const fields = [
-  { label: "Provider", value: "—" },
-  { label: "Dataset", value: "—" },
-  { label: "Lat / Lon", value: "— / —" },
-  { label: "Range", value: "— → —" },
-];
-
-export function ReadoutBar({ status }: ReadoutBarProps) {
+export function ReadoutBar({ status, provider, dataset, position, range }: ReadoutBarProps) {
   const config = statusConfig[status];
   const Icon = config.Icon;
+  const fields = [
+    { label: "Provider", value: provider || "—" },
+    { label: "Dataset", value: dataset || "—" },
+    { label: "Lat / Lon", value: position || "— / —" },
+    { label: "Range", value: range || "— → —" },
+  ];
 
   return (
-    <section aria-label="Current query readout" className="sticky top-0 z-30 border-y border-[var(--line-strong)] bg-[color-mix(in_srgb,var(--abyss)_94%,transparent)] shadow-[0_16px_48px_color-mix(in_srgb,var(--abyss)_70%,transparent)] backdrop-blur-xl">
+    <section aria-label="Current query readout" aria-live="polite" className="sticky top-0 z-30 border-y border-[var(--line-strong)] bg-[color-mix(in_srgb,var(--abyss)_94%,transparent)] shadow-[0_16px_48px_color-mix(in_srgb,var(--abyss)_70%,transparent)] backdrop-blur-xl">
       <div className="mx-auto grid max-w-[1440px] grid-cols-2 divide-x divide-y divide-[var(--line)] px-4 sm:px-6 lg:grid-cols-[1fr_1.35fr_1fr_1.35fr_1fr] lg:divide-y-0 lg:px-10">
         {fields.map((field) => (
           <div key={field.label} className="min-w-0 px-3 py-3 first:pl-0 sm:px-5 lg:py-4">

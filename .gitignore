@@ -21,3 +21,7 @@ __pycache__/
 # IDE
 .vscode/
 .idea/
+
+# Retrieved provider payloads (retain locally, never commit)
+backend/data/raw/*
+!backend/data/raw/.gitkeep
