@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+/* OceanData instrument system — all interface color and type derives from these tokens. */
+:root {
+  --abyss: #0a1929;
+  --foam: #eaf4f4;
+  --chart-cyan: #4cc9f0;
+  --depth-panel: #132a38;
+  --signal-amber: #f2a65a;
+  --coral-alert: #e85d4c;
+
+  --font-display: "Space Grotesk";
+  --font-body: "IBM Plex Sans";
+  --font-mono: "IBM Plex Mono";
+
+  --muted: color-mix(in srgb, var(--foam) 62%, transparent);
+  --faint: color-mix(in srgb, var(--foam) 38%, transparent);
+  --line: color-mix(in srgb, var(--foam) 13%, transparent);
+  --line-strong: color-mix(in srgb, var(--foam) 23%, transparent);
+  --panel-raised: color-mix(in srgb, var(--depth-panel) 82%, var(--foam));
+  --cyan-wash: color-mix(in srgb, var(--chart-cyan) 9%, transparent);
+  --amber-wash: color-mix(in srgb, var(--signal-amber) 10%, transparent);
+  --coral-wash: color-mix(in srgb, var(--coral-alert) 10%, transparent);
+}
+
+@theme inline {
+  --color-background: var(--abyss);
+  --color-foreground: var(--foam);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-mono);
+  --font-display: var(--font-display);
+}
+
+* { box-sizing: border-box; }
+html { background: var(--abyss); scroll-behavior: smooth; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--abyss);
+  color: var(--foam);
+  font-family: var(--font-body), sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+button, input, select { font: inherit; }
+::selection { background: var(--chart-cyan); color: var(--abyss); }
+
+.instrument-grid {
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, black, transparent 76%);
+}
+
+.contours {
+  background-image:
+    radial-gradient(ellipse 42% 28% at 86% 20%, transparent 66%, var(--line) 67%, transparent 68%),
+    radial-gradient(ellipse 34% 23% at 86% 20%, transparent 66%, var(--line) 67%, transparent 68%),
+    radial-gradient(ellipse 25% 17% at 86% 20%, transparent 66%, var(--line) 67%, transparent 68%);
+}
+
+.reading { font-family: var(--font-mono), monospace; font-variant-numeric: tabular-nums; }
+.display { font-family: var(--font-display), sans-serif; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
